@@ -36,7 +36,7 @@ namespace ProjectONE.GUI
             }
         }
 
-        //inserire attributo
+        //insert attribute
         private void button1_Click(object sender, EventArgs e)
         {
             if (!comboBox1.SelectedItem.ToString().Equals("String"))
@@ -46,10 +46,13 @@ namespace ProjectONE.GUI
                 {
                     if (temp1 <= temp2) //range: n1 <= n2?
                     {
-                        if (this.comboBox1.SelectedItem.ToString().Equals("Integer")) //attribute of type int
+                        if (this.comboBox1.SelectedItem.ToString().Equals("Integer"))
+                        { //attribute of type int
                             this.CreateTreeForm.passParams(this.type, textBox1.Text, comboBox1.SelectedItem.ToString(), ((int)temp1).ToString(), ((int)temp2).ToString());
-                        else //attribute of type double
+                        }
+                        else { //attribute of type double
                             this.CreateTreeForm.passParams(this.type, textBox1.Text, comboBox1.SelectedItem.ToString(), temp1.ToString(), temp2.ToString());
+                        }
                     }
                 }
                 return;

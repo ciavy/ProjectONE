@@ -7,16 +7,21 @@ using System.Threading.Tasks;
 
 namespace ProjectONE
 {
-    class Attribute
+    /*
+     * Represents an attribute (for example PTime = 8). It is attached to a node or to an edge.
+     * An attribute can be a string, an int or a double. Int and double have a range.
+     * The custumer requests that they must be auto-generated. Double attributes will be the most used ones.
+     */
+    public class Attribute
     {
         public enum AttributeType { STRING, DOUBLE, INT };
         String Name { get; set; }
         AttributeType type { get; }
-        double upperbound { get; set; }
-        double lowerbound { get; set; }
-        int value_int { get; set; }
-        double value_double { get; set; }
-        string value_string { get; set; }
+        double upperbound { get; set; } //only set if type is double or int
+        double lowerbound { get; set; } //only set if type is double or int
+        int value_int { get; set; } //value of the attribute. only needed if type is int
+        double value_double { get; set; } //value of the attribute. only needed if type is double
+        string value_string { get; set; } //value of the attribute. only needed if type is string
 
         /**
          * Note: if t = STRING => lb and ub are excluded automatically
@@ -32,16 +37,35 @@ namespace ProjectONE
             }
         }
 
+        //Needed for test. Attribute with fixed value
+        public Attribute(String name, AttributeType t, string value)
+        {
+            this.Name = name;
+            this.type = t;
+            switch (t)
+            {
+                case AttributeType.DOUBLE:
+                    this.value_double = double.Parse(value);
+                    break;
+                case AttributeType.INT:
+                    this.value_int = int.Parse(value);
+                    break;
+                case AttributeType.STRING:
+                    this.value_string = value;
+                    break;
+            }
+        }
+
         public override string ToString()
         {
-            string ris = Name + ":" + this.type + "[" + this.lowerbound + ";" + this.upperbound + "] ";
+            string ris = Name + ": ";
             switch(type)
             {
                 case AttributeType.DOUBLE:
-                    ris += value_double;
+                    ris += value_double + "\t[" + lowerbound + ";" + upperbound + "]";
                     break;
                 case AttributeType.INT:
-                    ris += value_int;
+                    ris += value_int + "\t[" + (int) lowerbound + ";" + (int) upperbound + "]";
                     break;
                 case AttributeType.STRING:
                     ris += value_string;
@@ -50,11 +74,17 @@ namespace ProjectONE
             return ris;
         }
 
+        /*
+         * Clones an attribute, ie returns a new instance of Attribute with the same fields.
+         */
         public Attribute Clone()
         {
             return new Attribute(Name, type, this.lowerbound, this.upperbound);
         }
 
+        /**
+         * generates a random attribute, taking into account its desidered type = {string,double,int}
+         */
         public Attribute generate()
         {
             MyRandom r = new MyRandom();
@@ -77,32 +107,6 @@ namespace ProjectONE
             return this;
         }
         
-    }
-
-    public class MyRandom
-    {
-        public double Next(double max)
-        {
-            return Next(0.0, max);
-        }
-
-        private int Round(double n)
-        {
-            int res = (int)n;
-            if (n - Math.Truncate(n) > 0.5)
-                res++;
-            return res;
-        }
-
-        public double Next(double min, double max)
-        {
-            double res = (double) (DateTime.Now.Millisecond % Round(max)); //with max as double you could get error because of memory represention of result. So (int) max is needed
-            if (res < min)
-                res += min;
-            if (res > max)
-                res = max;
-            return res;
-        }
     }
 
 }

@@ -12,9 +12,14 @@ namespace ProjectONE.GUI
 {
     public partial class CreateTreeForm : Form
     {
+        private LinkedList<Attribute> verattr { get; set; }
+        private LinkedList<Attribute> edgeattr { get; set; }
+
         public CreateTreeForm()
         {
             InitializeComponent();
+            this.verattr = new LinkedList<Attribute>();
+            this.edgeattr = new LinkedList<Attribute>();
         }
 
         //button + pressed (vertex attributes)
@@ -25,6 +30,29 @@ namespace ProjectONE.GUI
             i.Activate();
         }
 
+        /// <summary>
+        /// Adds a new attribute to vertexes
+        /// </summary>
+        /// <param name="a"></param>
+        public void AppendVertexAttribute(Attribute a)
+        {
+            if (this.verattr == null)
+                this.verattr = new LinkedList<Attribute>();
+            this.verattr.AddLast(a);
+        }
+
+        /// <summary>
+        /// Adds a new attribute to edges
+        /// </summary>
+        /// <param name="a"></param>
+        private void AppendEdgeAttribute(Attribute a)
+        {
+            Console.WriteLine(a.ToString());
+            if (this.edgeattr == null)
+                this.edgeattr = new LinkedList<Attribute>();
+            this.edgeattr.AddLast(a);
+        }
+
         /*
          * Permette di fare comunicare la finestra d'inserimento attributo con questa.
          * I parametri sono, in ordine, {vertex, edge}, il nome dell'attributo, il tipo {string, double, int} e i due estremi del range.
@@ -32,9 +60,37 @@ namespace ProjectONE.GUI
         public void passParams(String type, String nomeattr, String cbsel, String range0, String range1)
         {
             if (type.Equals("vertex"))
+            {
                 this.listbox_vertexattr.Items.Add(nomeattr + (cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")"));
+                switch (cbsel)
+                {
+                    case "String":
+                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.STRING, 0.0, 0.0));
+                        break;
+                    case "Double":
+                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.DOUBLE, Double.Parse(range0), double.Parse(range1)));
+                        break;
+                    case "Integer":
+                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.INT, int.Parse(range0), int.Parse(range1)));
+                        break;
+                 }
+            }
             else
+            {
                 this.listbox_edgeattr.Items.Add(nomeattr + (cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")"));
+                switch (cbsel)
+                {
+                    case "String":
+                        this.AppendEdgeAttribute(new Attribute(nomeattr, Attribute.AttributeType.STRING, 0.0, 0.0));
+                        break;
+                    case "Double":
+                        this.AppendEdgeAttribute(new Attribute(nomeattr, Attribute.AttributeType.DOUBLE, Double.Parse(range0), double.Parse(range1)));
+                        break;
+                    case "Integer":
+                        this.AppendEdgeAttribute(new Attribute(nomeattr, Attribute.AttributeType.INT, int.Parse(range0), int.Parse(range1)));
+                        break;
+                }
+            }
         }
 
         //button - pressed (vertex attributes)
@@ -65,9 +121,20 @@ namespace ProjectONE.GUI
             {
                 if (textBox1.Text.Length != 0 && textBox2.Text.Length != 0 && listbox_edgeattr.Items.Count != 0 && listbox_vertexattr.Items.Count != 0)
                 {
-                    //TODO
+                    if (splitsize >= 1 && depth >= 1)
+                    {
+                        Console.WriteLine(this.verattr.ToString());
+                        Console.WriteLine(this.edgeattr.ToString());
+                        Tree temp = Tree.getRandomTree(depth, splitsize, this.verattr, this.edgeattr);
+                        if (temp.ToFile() == false)
+                            MessageBox.Show("Problems while storing file into file");
+                        if (temp.ToDatabase() == false)
+                            MessageBox.Show("Problems while uploading tree to database");
+                        return;
+                    }
                 }
             }
+            this.label7.Visible = true;
         }
 
         //Choose button. Shows a FolderBrowserDialog

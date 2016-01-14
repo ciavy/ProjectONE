@@ -92,6 +92,7 @@
     <Compile Include="GUI\UploadTreeForm.Designer.cs">
       <DependentUpon>UploadTreeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyRandom.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Tree.cs" />
     <Compile Include="Edge.cs" />
@@ -105,6 +106,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\CalculusForm.resx">
       <DependentUpon>CalculusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\CreateTreeForm.resx">
+      <DependentUpon>CreateTreeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
@@ -124,6 +128,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

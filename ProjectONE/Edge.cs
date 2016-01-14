@@ -6,22 +6,46 @@ using System.Threading.Tasks;
 
 namespace ProjectONE
 {
+    /// <summary>
+    /// Represents an edge of the tree, with its random-generable attributes.
+    /// An edge connects two nodes.
+    /// </summary>
     class Edge
     {
-        LinkedList<Attribute> attributes;
+        LinkedList<Attribute> Attributes; //instance attributes for this edge
         Node Top { get; set; }
         public Node Bottom { get; set; }
+        int Name { get; set; }
 
-        public Edge(Node top, Node bottom)
+        public Edge(int name, Node top, Node bottom)
         {
+            this.Name = name;
             this.Top = top;
             this.Bottom = bottom;
         }
 
-        public Edge(Node top, Node btm, LinkedList<Attribute> attr)
+        public Edge(int name, Node top, Node btm, LinkedList<Attribute> attr) : this(name, top, btm)
         {
-
+            this.Attributes = attr;
         }
-        
+
+        public Edge(int name, Node top, Node btm, Attribute attr) : this(name, top, btm)
+        {
+            Attributes = new LinkedList<Attribute>();
+            Attributes.AddLast(attr);
+        }
+
+        public override string ToString()
+        {
+            String s = "edge" + this.Name.ToString() + ":";
+
+            if (Attributes == null)
+                return s;
+
+            foreach (Attribute a in Attributes)
+                s += "\n\t" + a.ToString();
+            return s;
+        }
+
     }
 }

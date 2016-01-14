@@ -6,18 +6,21 @@ using System.Threading.Tasks;
 
 namespace ProjectONE
 {
+    /// <summary>
+    /// Represents a node of the tree, with its random-generable attributes and edges.
+    /// A node has a name, [splitSize] outgoing edges and only one incoming edge.
+    /// </summary>
     class Node
     {
-        Attribute[] Attributes { get; set; }
-        public LinkedList<Edge> OutgoingEdges { get; set; }
-        Edge IncomingEdge { get; set; }
-        int Name { get; set; }
+        public Attribute[] Attributes { get; set; } //instance attributes, already generated
+        public LinkedList<Edge> OutgoingEdges { get; set; } //vertici uscenti dal nodo
+        public Edge IncomingEdge { get; set; }
+        public int Name { get; set; } //name of the node
+        public int Level { get; set; } //level of this node
 
-        public Node(int nodeName, Attribute[] attr)
+        public Node(int nodeName, Attribute[] attr) : this(nodeName)
         {
-            this.Name = nodeName;
             this.Attributes = attr;
-            this.OutgoingEdges = new LinkedList<Edge>();
         }
 
         public Node(int name)
@@ -26,11 +29,16 @@ namespace ProjectONE
             this.OutgoingEdges = new LinkedList<Edge>();
         }
 
-        public Node(int nodeName, Attribute[] attr, LinkedList<Edge> edges)
+        public Node(int nodeName, Attribute[] attr, LinkedList<Edge> edges, int level) : this(nodeName, attr)
         {
             this.OutgoingEdges = edges;
-            this.Name = nodeName;
-            this.Attributes = attr;
+            this.Level = level;
+        }
+
+        public Node(int nodeName, Attribute attr) : this(nodeName)
+        {
+            this.Attributes = new Attribute[1];
+            this.Attributes[0] = attr;
         }
 
         public void append(Edge edge)
@@ -38,14 +46,9 @@ namespace ProjectONE
             this.OutgoingEdges.AddLast(edge);
         }
 
-        public Tree toTree()
-        {
-            return null;
-        }
-
         public override string ToString()
         {
-            String s = Name.ToString() + ":";
+            String s = "vertex" + Name.ToString() + ":";
             foreach (Attribute a in Attributes)
                 s += "\n\t" + a.ToString();
             return s;
