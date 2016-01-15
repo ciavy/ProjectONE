@@ -12,8 +12,8 @@ namespace ProjectONE
     /// </summary>
     class Edge
     {
-        LinkedList<Attribute> Attributes; //instance attributes for this edge
-        Node Top { get; set; }
+        public LinkedList<Attribute> Attributes; //instance attributes for this edge
+        public Node Top { get; set; }
         public Node Bottom { get; set; }
         public int Name { get; set; }
 

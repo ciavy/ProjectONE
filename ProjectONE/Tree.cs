@@ -102,9 +102,43 @@ namespace ProjectONE
             return res;
         }
 
-        private String preorderXML_edges(XmlWriter writer)
+        private void preorderXML_edges(XmlWriter writer)
         {
-            return "";
+            if (this.root == null)
+                return;
+
+            if (this.root.OutgoingEdges == null || this.root.OutgoingEdges.Count == 0)
+                return;
+
+            
+            foreach (Edge e in this.root.OutgoingEdges)
+            {
+                writer.WriteStartElement("Edge");
+                writer.WriteElementString("Name", e.Name.ToString());
+                writer.WriteElementString("Top", e.Top.Name.ToString());
+                writer.WriteElementString("Bottom", e.Bottom.Name.ToString());
+                writer.WriteStartElement("Attributes");
+                foreach (Attribute a in e.Attributes)
+                {
+                    writer.WriteStartElement("Attribute");
+                    writer.WriteElementString("Type", a.type.ToString());
+                    writer.WriteElementString("Name", a.Name);
+                    if (a.type == Attribute.AttributeType.STRING)
+                        writer.WriteElementString("Value", a.value_string);
+                    else
+                    {
+                        writer.WriteElementString("Value", a.type == Attribute.AttributeType.INT ? a.value_int.ToString() : a.value_double.ToString());
+                        writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
+                        writer.WriteElementString("Upperbound", a.upperbound.ToString());
+                    }
+                    writer.WriteEndElement(); //Attribute
+                }
+                writer.WriteEndElement(); //Attributes
+                writer.WriteEndElement(); //Edge
+                Tree subtree = new Tree(SplitSize, Depth - 1, VertexAttributes, EdgeAttributes);
+                subtree.root = e.Bottom;
+                subtree.preorderXML_edges(writer);
+            }
         }
 
         private void preorderXML_vertexes(XmlWriter writer)
@@ -222,10 +256,9 @@ namespace ProjectONE
                 writer.WriteEndElement(); //Tree
                 writer.WriteEndDocument();
                 writer.Close();
-                
             }
 
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -315,13 +348,13 @@ namespace ProjectONE
                 //Console.WriteLine("curNode:" + curNode);
                 for (int s = 0; s < SplitSize; s++)
                 {
-                    Node childVertex = new Node(n++, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray(), new LinkedList<Edge>(), l);
+                    Node childVertex = new Node((int) new MyRandom().Next(0, double.MaxValue) +  n++, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray(), new LinkedList<Edge>(), l);
                     if (l != Depth - 1)
                     {
                         stack.Enqueue(childVertex);
                         //Console.WriteLine("childVx: " + childVertex.ToString());
                     }
-                    curNode.append(new Edge((int) new MyRandom().Next(0, double.MaxValue), curNode, childVertex, GetRandomAttributes(false, VertexAttributes, EdgeAttributes)));
+                    curNode.append(new Edge((int) new MyRandom().Next(0, double.MaxValue) + n, curNode, childVertex, GetRandomAttributes(false, VertexAttributes, EdgeAttributes)));
                 }
             }
             return tree;
