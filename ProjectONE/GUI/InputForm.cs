@@ -31,8 +31,8 @@ namespace ProjectONE.GUI
             ComboBox cb = (ComboBox)sender;
             if (cb.SelectedText != "String")
             {
-                textBox2.ReadOnly = false;
-                textBox3.ReadOnly = false;
+                textBox2.Visible = true;
+                textBox3.Visible = true;
             }
         }
 

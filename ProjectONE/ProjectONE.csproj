@@ -61,7 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute.cs" />
+    <Compile Include="Utility\Attribute.cs" />
     <Compile Include="GUI\CalculusForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,23 +92,26 @@
     <Compile Include="GUI\UploadTreeForm.Designer.cs">
       <DependentUpon>UploadTreeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyRandom.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Tree.cs" />
-    <Compile Include="Edge.cs" />
+    <Compile Include="Utility\MyRandom.cs" />
+    <Compile Include="Utility\Node.cs" />
+    <Compile Include="Utility\Tree.cs" />
+    <Compile Include="Utility\Edge.cs" />
     <Compile Include="GUI\Test.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Test.Designer.cs">
       <DependentUpon>Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Utility\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\CalculusForm.resx">
       <DependentUpon>CalculusForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\CreateTreeForm.resx">
       <DependentUpon>CreateTreeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\InputForm.resx">
+      <DependentUpon>InputForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainPage.resx">
       <DependentUpon>MainPage.cs</DependentUpon>
@@ -128,7 +131,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

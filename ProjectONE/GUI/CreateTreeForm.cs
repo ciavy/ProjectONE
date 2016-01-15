@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -61,7 +62,17 @@ namespace ProjectONE.GUI
         {
             if (type.Equals("vertex"))
             {
-                this.listbox_vertexattr.Items.Add(nomeattr + (cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")"));
+                String newattribute = nomeattr +(cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")");
+                foreach (string e in this.listbox_vertexattr.Items)
+                {
+                    if (e.Equals(newattribute))
+                    {
+                        MessageBox.Show("Attribute already inserted");
+                        return;
+                    }
+                }
+
+                this.listbox_vertexattr.Items.Add(newattribute);
                 switch (cbsel)
                 {
                     case "String":
@@ -77,6 +88,16 @@ namespace ProjectONE.GUI
             }
             else
             {
+                String newattribute = nomeattr + (cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")");
+                foreach (string e in this.listbox_edgeattr.Items)
+                {
+                    if (e.Equals(newattribute))
+                    {
+                        MessageBox.Show("Attribute already inserted");
+                        return;
+                    }
+                }
+
                 this.listbox_edgeattr.Items.Add(nomeattr + (cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")"));
                 switch (cbsel)
                 {
@@ -123,8 +144,6 @@ namespace ProjectONE.GUI
                 {
                     if (splitsize >= 1 && depth >= 1)
                     {
-                        Console.WriteLine(this.verattr.ToString());
-                        Console.WriteLine(this.edgeattr.ToString());
                         Tree temp = Tree.getRandomTree(depth, splitsize, this.verattr, this.edgeattr);
                         temp.type = textBox1.Text;
                         if (temp.ToFile(this.textBox2.Text) == false)
@@ -135,7 +154,7 @@ namespace ProjectONE.GUI
                     }
                 }
             }
-            this.label7.Visible = true;
+            MessageBox.Show("Please insert correct parameters");
         }
 
         //Choose button. Shows a FolderBrowserDialog

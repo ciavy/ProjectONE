@@ -48,7 +48,6 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,28 +56,28 @@
             this.textBox1.Location = new System.Drawing.Point(110, 45);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(240, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBox1.TabIndex = 0;
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(110, 71);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(159, 20);
-            this.textBox2.TabIndex = 2;
+            this.textBox2.TabIndex = 1;
             // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(275, 100);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(75, 20);
-            this.textBox3.TabIndex = 3;
+            this.textBox3.TabIndex = 4;
             // 
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(110, 100);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(75, 20);
-            this.textBox4.TabIndex = 4;
+            this.textBox4.TabIndex = 3;
             // 
             // button2
             // 
@@ -205,27 +204,16 @@
             this.button1.Location = new System.Drawing.Point(275, 71);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 2;
             this.button1.Text = "Choose";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(107, 217);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(161, 13);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Please insert correct parameters!";
-            this.label7.Visible = false;
             // 
             // CreateTreeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(569, 261);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -272,6 +260,5 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label7;
     }
 }

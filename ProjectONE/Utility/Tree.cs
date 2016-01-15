@@ -201,6 +201,11 @@ namespace ProjectONE
             if (this.type.EndsWith(".xml") == false)
                 this.type += ".xml";
 
+            if(path.EndsWith("/") == false && path.EndsWith("\\") == false)
+            {
+                System.Windows.Forms.MessageBox.Show("Please let your directory end with a slash");
+            }
+
             String completepath = path + this.type;
             using (XmlTextWriter writer = new XmlTextWriter(completepath, Encoding.ASCII))
             {

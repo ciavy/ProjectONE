@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_return = new System.Windows.Forms.Button();
-            this.txt_tempo_stimato = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lstb_result = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -42,28 +40,13 @@
             this.lbl_vertice_a = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.progressbar = new System.Windows.Forms.ProgressBar();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // btn_return
-            // 
-            this.btn_return.Location = new System.Drawing.Point(266, 226);
-            this.btn_return.Name = "btn_return";
-            this.btn_return.Size = new System.Drawing.Size(75, 23);
-            this.btn_return.TabIndex = 28;
-            this.btn_return.Text = "Home";
-            this.btn_return.UseVisualStyleBackColor = true;
-            // 
-            // txt_tempo_stimato
-            // 
-            this.txt_tempo_stimato.Location = new System.Drawing.Point(307, 181);
-            this.txt_tempo_stimato.Name = "txt_tempo_stimato";
-            this.txt_tempo_stimato.Size = new System.Drawing.Size(96, 20);
-            this.txt_tempo_stimato.TabIndex = 27;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(220, 184);
+            this.label4.Location = new System.Drawing.Point(214, 197);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(81, 13);
             this.label4.TabIndex = 26;
@@ -72,7 +55,7 @@
             // lstb_result
             // 
             this.lstb_result.FormattingEnabled = true;
-            this.lstb_result.Location = new System.Drawing.Point(223, 77);
+            this.lstb_result.Location = new System.Drawing.Point(217, 90);
             this.lstb_result.Name = "lstb_result";
             this.lstb_result.Size = new System.Drawing.Size(180, 95);
             this.lstb_result.TabIndex = 25;
@@ -80,7 +63,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(220, 61);
+            this.label3.Location = new System.Drawing.Point(214, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(67, 13);
             this.label3.TabIndex = 24;
@@ -89,18 +72,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(220, 7);
+            this.label2.Location = new System.Drawing.Point(272, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 22;
-            this.label2.Text = "Vertex B found!";
+            this.label2.Text = "No progress";
             // 
             // btn_perform_calculus
             // 
             this.btn_perform_calculus.Location = new System.Drawing.Point(48, 172);
             this.btn_perform_calculus.Name = "btn_perform_calculus";
             this.btn_perform_calculus.Size = new System.Drawing.Size(104, 23);
-            this.btn_perform_calculus.TabIndex = 21;
+            this.btn_perform_calculus.TabIndex = 3;
             this.btn_perform_calculus.Text = "Perform Calculus";
             this.btn_perform_calculus.UseVisualStyleBackColor = true;
             // 
@@ -109,7 +92,7 @@
             this.txt_vertice_b.Location = new System.Drawing.Point(112, 131);
             this.txt_vertice_b.Name = "txt_vertice_b";
             this.txt_vertice_b.Size = new System.Drawing.Size(80, 20);
-            this.txt_vertice_b.TabIndex = 20;
+            this.txt_vertice_b.TabIndex = 2;
             // 
             // lbl_certice_b
             // 
@@ -125,14 +108,14 @@
             this.txt_vertice_a.Location = new System.Drawing.Point(12, 131);
             this.txt_vertice_a.Name = "txt_vertice_a";
             this.txt_vertice_a.Size = new System.Drawing.Size(80, 20);
-            this.txt_vertice_a.TabIndex = 18;
+            this.txt_vertice_a.TabIndex = 1;
             // 
             // txt_tree_type
             // 
             this.txt_tree_type.Location = new System.Drawing.Point(12, 77);
             this.txt_tree_type.Name = "txt_tree_type";
             this.txt_tree_type.Size = new System.Drawing.Size(180, 20);
-            this.txt_tree_type.TabIndex = 17;
+            this.txt_tree_type.TabIndex = 0;
             // 
             // lbl_vertice_a
             // 
@@ -154,19 +137,27 @@
             // 
             // progressbar
             // 
-            this.progressbar.Location = new System.Drawing.Point(223, 23);
+            this.progressbar.Location = new System.Drawing.Point(217, 36);
             this.progressbar.Name = "progressbar";
             this.progressbar.Size = new System.Drawing.Size(180, 23);
             this.progressbar.TabIndex = 29;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(301, 197);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(19, 13);
+            this.label5.TabIndex = 30;
+            this.label5.Text = "??";
             // 
             // CalculusForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(422, 261);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.progressbar);
-            this.Controls.Add(this.btn_return);
-            this.Controls.Add(this.txt_tempo_stimato);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lstb_result);
             this.Controls.Add(this.label3);
@@ -186,9 +177,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btn_return;
-        private System.Windows.Forms.TextBox txt_tempo_stimato;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox lstb_result;
         private System.Windows.Forms.Label label3;
@@ -201,5 +189,6 @@
         private System.Windows.Forms.Label lbl_vertice_a;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ProgressBar progressbar;
+        private System.Windows.Forms.Label label5;
     }
 }
