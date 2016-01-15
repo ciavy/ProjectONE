@@ -15,13 +15,13 @@ namespace ProjectONE
     public class Attribute
     {
         public enum AttributeType { STRING, DOUBLE, INT };
-        String Name { get; set; }
-        AttributeType type { get; }
-        double upperbound { get; set; } //only set if type is double or int
-        double lowerbound { get; set; } //only set if type is double or int
-        int value_int { get; set; } //value of the attribute. only needed if type is int
-        double value_double { get; set; } //value of the attribute. only needed if type is double
-        string value_string { get; set; } //value of the attribute. only needed if type is string
+        public String Name { get; set; }
+        public AttributeType type { get; }
+        public double upperbound { get; set; } //only set if type is double or int
+        public double lowerbound { get; set; } //only set if type is double or int
+        public int value_int { get; set; } //value of the attribute. only needed if type is int
+        public double value_double { get; set; } //value of the attribute. only needed if type is double
+        public string value_string { get; set; } //value of the attribute. only needed if type is string
 
         /**
          * Note: if t = STRING => lb and ub are excluded automatically

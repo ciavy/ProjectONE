@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ProjectONE
 {
@@ -14,6 +15,7 @@ namespace ProjectONE
     class Tree
     {
         public Node root { get; set; }
+        public String type { get; set; } //Name of the tree
         int SplitSize { get; set; } //how many childs a node has
         int Depth { get; set; } //levels of the tree
         LinkedList<Attribute> VertexAttributes { get; set; } //list of attributes that nodes have
@@ -100,12 +102,129 @@ namespace ProjectONE
             return res;
         }
 
+        private String preorderXML_edges(XmlWriter writer)
+        {
+            return "";
+        }
+
+        private void preorderXML_vertexes(XmlWriter writer)
+        {
+            if (this.root == null)
+                return;
+
+            if (this.root.OutgoingEdges == null)
+                return;
+
+            writer.WriteStartElement("Vertex");
+            writer.WriteElementString("Name", this.root.Name.ToString());
+            writer.WriteElementString("Level", this.root.Level.ToString());
+            writer.WriteStartElement("Attributes");
+            foreach(Attribute a in this.root.Attributes)
+            {
+                writer.WriteStartElement("Attribute");
+                writer.WriteElementString("Type", a.type.ToString());
+                writer.WriteElementString("Name", a.Name);
+                if (a.type == Attribute.AttributeType.STRING)
+                    writer.WriteElementString("Value", a.value_string);
+                else
+                {
+                    writer.WriteElementString("Value", a.type == Attribute.AttributeType.INT ? a.value_int.ToString() : a.value_double.ToString());
+                    writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
+                    writer.WriteElementString("Upperbound", a.upperbound.ToString());
+                }
+                writer.WriteEndElement(); //Attribute
+            }
+            writer.WriteEndElement(); //Attributes
+
+            writer.WriteStartElement("OutgoinEdges");
+            foreach (Edge e in this.root.OutgoingEdges)
+            {
+                writer.WriteStartElement("Edge");
+                writer.WriteElementString("Name", e.Name.ToString());
+                writer.WriteEndElement(); //Edge
+            }
+            writer.WriteEndElement(); //OutgoingEdges
+            writer.WriteEndElement(); //Vertex
+
+            foreach (Edge e in this.root.OutgoingEdges)
+            {
+                Tree subtree = new Tree(SplitSize, Depth - 1, VertexAttributes, EdgeAttributes);
+                subtree.root = e.Bottom;
+                subtree.preorderXML_vertexes(writer);
+            }
+        }
+
         /// <summary>
         /// Writes this tree to file, using preorder
         /// </summary>
         /// <returns>true on success</returns>
-        public bool ToFile()
+        public bool ToFile(String path)
         {
+            //Write general information
+            if (!System.IO.Directory.Exists(path))
+                return false;
+
+            if (this.type.EndsWith(".xml") == false)
+                this.type += ".xml";
+
+            String completepath = path + this.type;
+            using (XmlTextWriter writer = new XmlTextWriter(completepath, Encoding.ASCII))
+            {
+                writer.Formatting = Formatting.Indented;
+                writer.Indentation = 4;
+
+                writer.WriteStartDocument();
+                writer.WriteStartElement("Tree");
+                writer.WriteStartElement("GeneralInformation");
+                writer.WriteElementString("Type", this.type);
+                writer.WriteElementString("SplitSize", this.SplitSize.ToString());
+                writer.WriteElementString("Depth", this.Depth.ToString());
+
+                writer.WriteStartElement("VertexesAttributes");
+                foreach (Attribute a in this.VertexAttributes)
+                {
+                    writer.WriteStartElement("VertexAttribute");
+                    writer.WriteElementString("Type", a.type.ToString());
+                    writer.WriteElementString("Name", a.Name);
+                    if (a.type != Attribute.AttributeType.STRING)
+                    {
+                        writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
+                        writer.WriteElementString("Upperbound", a.upperbound.ToString());
+                    }
+                    writer.WriteEndElement(); //VertexAttribute
+                }
+                writer.WriteEndElement(); //VertexesAttributes
+
+                writer.WriteStartElement("EdgesAttributes");
+                foreach(Attribute a in this.EdgeAttributes)
+                {
+                    writer.WriteStartElement("EdgeAttribute");
+                    writer.WriteElementString("Type", a.type.ToString());
+                    writer.WriteElementString("Name", a.Name);
+                    if(a.type != Attribute.AttributeType.STRING)
+                    {
+                        writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
+                        writer.WriteElementString("Upperbound", a.upperbound.ToString());
+                    }
+                    writer.WriteEndElement(); //EdgeAttribute
+                }
+                writer.WriteEndElement(); //EdgesAttributes
+
+                writer.WriteEndElement(); //GeneralInformation
+
+                writer.WriteStartElement("Vertexes");
+                this.preorderXML_vertexes(writer);
+                writer.WriteEndElement(); //Vertex
+                writer.WriteStartElement("Edges");
+                this.preorderXML_edges(writer);
+                writer.WriteEndElement(); //Edges
+
+                writer.WriteEndElement(); //Tree
+                writer.WriteEndDocument();
+                writer.Close();
+                
+            }
+
             return false;
         }
 

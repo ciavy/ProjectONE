@@ -126,7 +126,8 @@ namespace ProjectONE.GUI
                         Console.WriteLine(this.verattr.ToString());
                         Console.WriteLine(this.edgeattr.ToString());
                         Tree temp = Tree.getRandomTree(depth, splitsize, this.verattr, this.edgeattr);
-                        if (temp.ToFile() == false)
+                        temp.type = textBox1.Text;
+                        if (temp.ToFile(this.textBox2.Text) == false)
                             MessageBox.Show("Problems while storing file into file");
                         if (temp.ToDatabase() == false)
                             MessageBox.Show("Problems while uploading tree to database");

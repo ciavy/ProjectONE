@@ -15,7 +15,7 @@ namespace ProjectONE
         LinkedList<Attribute> Attributes; //instance attributes for this edge
         Node Top { get; set; }
         public Node Bottom { get; set; }
-        int Name { get; set; }
+        public int Name { get; set; }
 
         public Edge(int name, Node top, Node bottom)
         {
