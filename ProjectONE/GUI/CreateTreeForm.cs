@@ -65,7 +65,7 @@ namespace ProjectONE.GUI
                 String newattribute = nomeattr +(cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")");
                 foreach (string e in this.listbox_vertexattr.Items)
                 {
-                    if (e.Equals(newattribute))
+                    if (e.StartsWith(nomeattr))
                     {
                         MessageBox.Show("Attribute already inserted");
                         return;
@@ -79,7 +79,7 @@ namespace ProjectONE.GUI
                         this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.STRING, 0.0, 0.0));
                         break;
                     case "Double":
-                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.DOUBLE, Double.Parse(range0), double.Parse(range1)));
+                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.DOUBLE, double.Parse(range0), double.Parse(range1)));
                         break;
                     case "Integer":
                         this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.INT, int.Parse(range0), int.Parse(range1)));
@@ -91,7 +91,7 @@ namespace ProjectONE.GUI
                 String newattribute = nomeattr + (cbsel.Equals("String") ? "" : " - [" + range0 + ";" + range1 + "] (" + cbsel + ")");
                 foreach (string e in this.listbox_edgeattr.Items)
                 {
-                    if (e.Equals(newattribute))
+                    if (e.StartsWith(nomeattr))
                     {
                         MessageBox.Show("Attribute already inserted");
                         return;
@@ -134,8 +134,8 @@ namespace ProjectONE.GUI
             this.listbox_edgeattr.Items.RemoveAt(this.listbox_edgeattr.SelectedIndex);
         }
 
-        //Create Tree
-        private void button2_Click(object sender, EventArgs e)
+        //button for Create Tree
+        private void generateTree(object sender, EventArgs e)
         {
             int splitsize, depth;
             if (int.TryParse(textBox4.Text, out splitsize) && int.TryParse(textBox3.Text, out depth))
@@ -144,12 +144,7 @@ namespace ProjectONE.GUI
                 {
                     if (splitsize >= 1 && depth >= 1)
                     {
-                        Tree temp = Tree.getRandomTree(depth, splitsize, this.verattr, this.edgeattr);
-                        temp.type = textBox1.Text;
-                        if (temp.ToFile(this.textBox2.Text) == false)
-                            MessageBox.Show("Problems while storing file into file");
-                        if (temp.ToDatabase() == false)
-                            MessageBox.Show("Problems while uploading tree to database");
+                        new CreateTreeControl(depth, splitsize, this.verattr, this.edgeattr, this.textBox2.Text, textBox1.Text);
                         return;
                     }
                 }

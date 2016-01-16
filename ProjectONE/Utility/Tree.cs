@@ -62,15 +62,6 @@ namespace ProjectONE
         }
 
         /// <summary>
-        /// returns the root node of this tree
-        /// </summary>
-        /// <returns></returns>
-        public Node getRoot()
-        {
-            return root;
-        }
-
-        /// <summary>
         /// Deallocates this tree.
         /// </summary>
         public void clear()

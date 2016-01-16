@@ -61,12 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\CreateTreeControl.cs" />
     <Compile Include="Utility\Attribute.cs" />
-    <Compile Include="GUI\CalculusForm.cs">
+    <Compile Include="GUI\CalculusManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\CalculusForm.Designer.cs">
-      <DependentUpon>CalculusForm.cs</DependentUpon>
+    <Compile Include="GUI\CalculusManagerForm.Designer.cs">
+      <DependentUpon>CalculusManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\CreateTreeForm.cs">
       <SubType>Form</SubType>
@@ -102,10 +103,10 @@
     <Compile Include="GUI\Test.Designer.cs">
       <DependentUpon>Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utility\Program.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI\CalculusForm.resx">
-      <DependentUpon>CalculusForm.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\CalculusManagerForm.resx">
+      <DependentUpon>CalculusManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\CreateTreeForm.resx">
       <DependentUpon>CreateTreeForm.cs</DependentUpon>

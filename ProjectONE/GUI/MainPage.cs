@@ -28,7 +28,7 @@ namespace ProjectONE.GUI
         //Button to open CalculusForm
         private void button3_Click(object sender, EventArgs e)
         {
-            CalculusForm f = new CalculusForm();
+            CalculusManagerForm f = new CalculusManagerForm();
             f.Visible = true;
             f.Activate();
         }

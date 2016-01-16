@@ -42,6 +42,12 @@ namespace ProjectONE.GUI
             if (!comboBox1.SelectedItem.ToString().Equals("String"))
             {
                 double temp1, temp2;
+
+                if (textBox2.Text.Contains("."))
+                    textBox2.Text = textBox2.Text.Replace(".", ",");
+                if (textBox3.Text.Contains("."))
+                    textBox3.Text = textBox3.Text.Replace(".", ",");
+
                 if (double.TryParse(textBox2.Text, out temp1) && double.TryParse(textBox3.Text, out temp2)) //both the values of the range are inserted?
                 {
                     if (temp1 <= temp2) //range: n1 <= n2?

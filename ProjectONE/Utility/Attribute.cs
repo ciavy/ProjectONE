@@ -59,13 +59,13 @@ namespace ProjectONE
         public override string ToString()
         {
             string ris = Name + ": ";
-            switch(type)
+            switch (type)
             {
                 case AttributeType.DOUBLE:
                     ris += value_double + "\t[" + lowerbound + ";" + upperbound + "]";
                     break;
                 case AttributeType.INT:
-                    ris += value_int + "\t[" + (int) lowerbound + ";" + (int) upperbound + "]";
+                    ris += value_int + "\t[" + (int)lowerbound + ";" + (int)upperbound + "]";
                     break;
                 case AttributeType.STRING:
                     ris += value_string;
@@ -95,7 +95,7 @@ namespace ProjectONE
                     value_string = a[(int)r.Next(49)].ToString();
                     value_string += a[(int)r.Next(6, 26)];
                     value_string += a[(int)r.Next(9, 18)];
-                    value_string += a[(int)r.Next(25,48)];
+                    value_string += a[(int)r.Next(25, 48)];
                     break;
                 case AttributeType.INT:
                     value_int = (int)r.Next(this.lowerbound, this.upperbound);
@@ -106,7 +106,7 @@ namespace ProjectONE
             }
             return this;
         }
-        
+
     }
 
 }

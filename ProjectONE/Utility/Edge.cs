@@ -15,11 +15,11 @@ namespace ProjectONE
         public LinkedList<Attribute> Attributes; //instance attributes for this edge
         public Node Top { get; set; }
         public Node Bottom { get; set; }
-        public int Name { get; set; }
+        public String Name { get; set; }
 
         public Edge(int name, Node top, Node bottom)
         {
-            this.Name = name;
+            this.Name = "edge" + name;
             this.Top = top;
             this.Bottom = bottom;
         }

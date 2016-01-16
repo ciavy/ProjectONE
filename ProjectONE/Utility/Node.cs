@@ -15,7 +15,7 @@ namespace ProjectONE
         public Attribute[] Attributes { get; set; } //instance attributes, already generated
         public LinkedList<Edge> OutgoingEdges { get; set; } //vertici uscenti dal nodo
         public Edge IncomingEdge { get; set; }
-        public int Name { get; set; } //name of the node
+        public String Name { get; set; } //name of the node
         public int Level { get; set; } //level of this node
 
         public Node(int nodeName, Attribute[] attr) : this(nodeName)
@@ -25,7 +25,7 @@ namespace ProjectONE
 
         public Node(int name)
         {
-            this.Name = name;
+            this.Name = "vertex" + name;
             this.OutgoingEdges = new LinkedList<Edge>();
         }
 
