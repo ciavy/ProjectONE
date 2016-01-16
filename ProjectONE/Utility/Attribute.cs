@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ProjectONE
 {
     /*
-     * Represents an attribute (for example PTime = 8). It is attached to a node or to an edge.
+     * Represents an attribute (for example PTime = 8). It is attached to a Vertex or to an edge.
      * An attribute can be a string, an int or a double. Int and double have a range.
      * The custumer requests that they must be auto-generated. Double attributes will be the most used ones.
      */

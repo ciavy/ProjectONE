@@ -8,18 +8,18 @@ using System.Xml;
 namespace ProjectONE
 {
     /*
-     * Represents a tree, with SplitSize child-nodes and Depth levels.
-     * This tree is complete and each node and edge have some well defined attributes.
+     * Represents a tree, with SplitSize child-Vertexs and Depth levels.
+     * This tree is complete and each Vertex and edge have some well defined attributes.
      * This tree can be either auto-generated or build manually from scratch.
      */
     class Tree
     {
-        public Node root { get; set; }
+        public Vertex root { get; set; }
         public String type { get; set; } //Name of the tree
-        int SplitSize { get; set; } //how many childs a node has
+        int SplitSize { get; set; } //how many childs a Vertex has
         int Depth { get; set; } //levels of the tree
-        LinkedList<Attribute> VertexAttributes { get; set; } //list of attributes that nodes have
-        LinkedList<Attribute> EdgeAttributes {get ; set; } //list of attributes that nodes have
+        LinkedList<Attribute> VertexAttributes { get; set; } //list of attributes that Vertexs have
+        LinkedList<Attribute> EdgeAttributes {get ; set; } //list of attributes that Vertexs have
 
         /// <summary>
         /// Constructs a tree with the following parameters
@@ -53,7 +53,7 @@ namespace ProjectONE
 
 
         /// <summary>
-        /// returns true if this tree is empty (ie no node nor edge is contained)
+        /// returns true if this tree is empty (ie no Vertex nor edge is contained)
         /// </summary>
         /// <returns></returns>
         public bool isEmpty()
@@ -78,7 +78,7 @@ namespace ProjectONE
             if (this.root == null)
                 return "";
 
-            String res = "NODE " + this.root.ToString();
+            String res = "Vertex " + this.root.ToString();
 
             if (this.root.OutgoingEdges == null)
                 return res;
@@ -274,7 +274,7 @@ namespace ProjectONE
         /// <summary>
         /// Generates random attributes, either for a vertex or for an edge.
         /// </summary>
-        /// <param name="forVertex">true if attribute list is for a node</param>
+        /// <param name="forVertex">true if attribute list is for a Vertex</param>
         /// <param name="vertattrs">list of attributes of vertexes</param>
         /// <param name="edgeattrs">list of attributes of edges</param>
         /// <returns>a list of random attributes for either a vertex or for an edge</returns>
@@ -301,10 +301,10 @@ namespace ProjectONE
         }
 
         /// <summary>
-        /// Counts nodes in this tree. For test
+        /// Counts Vertexs in this tree. For test
         /// </summary>
         /// <returns></returns>
-        public int countNodes()
+        public int countVertexs()
         {
             int n = 1;
             if (root.OutgoingEdges == null)
@@ -314,7 +314,7 @@ namespace ProjectONE
             {
                 Tree subtree = new Tree(SplitSize, Depth - 1, VertexAttributes, EdgeAttributes);
                 subtree.root = e.Bottom;
-                n += subtree.countNodes();
+                n += subtree.countVertexs();
             }
             return n;
         }
@@ -326,31 +326,31 @@ namespace ProjectONE
         /// <param name="VertexAttributes">List of attributes of each vertex in the future tree</param>
         /// <returns>a random tree</returns>
         public static Tree getRandomTree( int Depth, int SplitSize, LinkedList<Attribute> VertexAttributes, LinkedList<Attribute> EdgeAttributes)
-        { //generate per level: each node gets its childs
+        { //generate per level: each Vertex gets its childs
             //Console.WriteLine("depth: " + Depth + "; splitsize: " + SplitSize);
             Tree tree = new Tree(SplitSize, Depth, VertexAttributes, EdgeAttributes);
-            Node root = new Node(1, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray());
+            Vertex root = new Vertex(1, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray());
             tree.root = root;
-            Queue<Node> stack = new Queue<Node>();
+            Queue<Vertex> stack = new Queue<Vertex>();
             stack.Enqueue(tree.root);
-            Node curNode;
+            Vertex curVertex;
             int n = 2;
             for (int l = 1; l < Depth || stack.Count != 0; l++)
             {
                 if (stack.Count != 0 && l >= Depth)
                     l--;
                 
-                curNode = stack.Dequeue();
-                //Console.WriteLine("curNode:" + curNode);
+                curVertex = stack.Dequeue();
+                //Console.WriteLine("curVertex:" + curVertex);
                 for (int s = 0; s < SplitSize; s++)
                 {
-                    Node childVertex = new Node((int) new MyRandom().Next(0, double.MaxValue) +  n++, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray(), new LinkedList<Edge>(), l);
+                    Vertex childVertex = new Vertex((int) new MyRandom().Next(0, double.MaxValue) +  n++, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray(), new LinkedList<Edge>(), l);
                     if (l != Depth - 1)
                     {
                         stack.Enqueue(childVertex);
                         //Console.WriteLine("childVx: " + childVertex.ToString());
                     }
-                    curNode.append(new Edge((int) new MyRandom().Next(0, double.MaxValue) + n, curNode, childVertex, GetRandomAttributes(false, VertexAttributes, EdgeAttributes)));
+                    curVertex.append(new Edge((int) new MyRandom().Next(0, double.MaxValue) + n, curVertex, childVertex, GetRandomAttributes(false, VertexAttributes, EdgeAttributes)));
                 }
             }
             return tree;

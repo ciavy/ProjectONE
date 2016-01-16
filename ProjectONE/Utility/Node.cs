@@ -7,35 +7,35 @@ using System.Threading.Tasks;
 namespace ProjectONE
 {
     /// <summary>
-    /// Represents a node of the tree, with its random-generable attributes and edges.
-    /// A node has a name, [splitSize] outgoing edges and only one incoming edge.
+    /// Represents a Vertex of the tree, with its random-generable attributes and edges.
+    /// A Vertex has a name, [splitSize] outgoing edges and only one incoming edge.
     /// </summary>
-    class Node
+    class Vertex
     {
         public Attribute[] Attributes { get; set; } //instance attributes, already generated
         public LinkedList<Edge> OutgoingEdges { get; set; } //vertici uscenti dal nodo
         public Edge IncomingEdge { get; set; }
-        public String Name { get; set; } //name of the node
-        public int Level { get; set; } //level of this node
+        public String Name { get; set; } //name of the Vertex
+        public int Level { get; set; } //level of this Vertex
 
-        public Node(int nodeName, Attribute[] attr) : this(nodeName)
+        public Vertex(int VertexName, Attribute[] attr) : this(VertexName)
         {
             this.Attributes = attr;
         }
 
-        public Node(int name)
+        public Vertex(int name)
         {
             this.Name = "vertex" + name;
             this.OutgoingEdges = new LinkedList<Edge>();
         }
 
-        public Node(int nodeName, Attribute[] attr, LinkedList<Edge> edges, int level) : this(nodeName, attr)
+        public Vertex(int VertexName, Attribute[] attr, LinkedList<Edge> edges, int level) : this(VertexName, attr)
         {
             this.OutgoingEdges = edges;
             this.Level = level;
         }
 
-        public Node(int nodeName, Attribute attr) : this(nodeName)
+        public Vertex(int VertexName, Attribute attr) : this(VertexName)
         {
             this.Attributes = new Attribute[1];
             this.Attributes[0] = attr;

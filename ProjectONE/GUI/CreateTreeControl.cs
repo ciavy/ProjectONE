@@ -24,10 +24,12 @@ namespace ProjectONE.GUI
             generateRandomVertexAttributes(edgesAttributes); TODO Agostino*/
             if(generateTreeFile() == false)
                 MessageBox.Show("Problems while storing file into file");
-            MessageBox.Show("Your tree is in the file");
+            else
+                MessageBox.Show("Your tree is in the file");
             if(uploadTree() == false)
                 MessageBox.Show("Problems while uploading tree to database");
-            MessageBox.Show("Your tree is on the Database");
+            else
+                MessageBox.Show("Your tree is on the Database");
         }
 
         public bool uploadTree()
