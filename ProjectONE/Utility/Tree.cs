@@ -93,45 +93,59 @@ namespace ProjectONE
             return res;
         }
 
-        private void preorderXML_edges(XmlWriter writer)
+        private void edgesToXML(XmlWriter writer, Vertex curvertex)
+        {
+            if (curvertex == null)
+                return;
+
+            if (curvertex.OutgoingEdges == null || curvertex.OutgoingEdges.Count == 0)
+                return;
+
+            foreach (Edge e in curvertex.OutgoingEdges)
+            {
+                writer.WriteStartElement("Edge");
+                writer.WriteElementString("Name", e.Name.ToString());
+                writer.WriteStartElement("Attributes");
+                foreach (Attribute a in e.Attributes)
+                {
+                    writer.WriteElementString(a.Name,
+                        a.type == Attribute.AttributeType.STRING ?
+                        a.value_string : a.value_int.ToString());
+                }
+                writer.WriteEndElement(); //Attributes
+                this.vertexToXML(writer, e.Bottom);
+                writer.WriteEndElement(); //Vertex
+                writer.WriteEndElement(); //Edge
+            }
+        }
+
+        /// <summary>
+        /// Prints the cur vertex to XML
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="cur">node to be printed</param>
+        private void vertexToXML(XmlWriter writer, Vertex cur)
         {
             if (this.root == null)
                 return;
 
-            if (this.root.OutgoingEdges == null || this.root.OutgoingEdges.Count == 0)
-                return;
-
-            
-            foreach (Edge e in this.root.OutgoingEdges)
+            writer.WriteStartElement("Vertex");
+            writer.WriteElementString("Name", cur.Name.ToString());
+            writer.WriteElementString("Depth", cur.Level.ToString());
+            writer.WriteStartElement("Attributes");
+            foreach (Attribute a in cur.Attributes)
             {
-                writer.WriteStartElement("Edge");
-                writer.WriteElementString("Name", e.Name.ToString());
-                writer.WriteElementString("Top", e.Top.Name.ToString());
-                writer.WriteElementString("Bottom", e.Bottom.Name.ToString());
-                writer.WriteStartElement("Attributes");
-                foreach (Attribute a in e.Attributes)
-                {
-                    writer.WriteStartElement("Attribute");
-                    writer.WriteElementString("Type", a.type.ToString());
-                    writer.WriteElementString("Name", a.Name);
-                    if (a.type == Attribute.AttributeType.STRING)
-                        writer.WriteElementString("Value", a.value_string);
-                    else
-                    {
-                        writer.WriteElementString("Value", a.type == Attribute.AttributeType.INT ? a.value_int.ToString() : a.value_double.ToString());
-                        writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
-                        writer.WriteElementString("Upperbound", a.upperbound.ToString());
-                    }
-                    writer.WriteEndElement(); //Attribute
-                }
-                writer.WriteEndElement(); //Attributes
-                writer.WriteEndElement(); //Edge
-                Tree subtree = new Tree(SplitSize, Depth - 1, VertexAttributes, EdgeAttributes);
-                subtree.root = e.Bottom;
-                subtree.preorderXML_edges(writer);
+                writer.WriteElementString(a.Name,
+                    a.type == Attribute.AttributeType.STRING ?
+                    a.value_string : a.value_int.ToString());
             }
+            writer.WriteEndElement(); //Attributes
         }
 
+        /// <summary>
+        /// Writes the xml with vertexes printed in preorder
+        /// </summary>
+        /// <param name="writer"></param>
         private void preorderXML_vertexes(XmlWriter writer)
         {
             if (this.root == null)
@@ -140,35 +154,8 @@ namespace ProjectONE
             if (this.root.OutgoingEdges == null)
                 return;
 
-            writer.WriteStartElement("Vertex");
-            writer.WriteElementString("Name", this.root.Name.ToString());
-            writer.WriteElementString("Level", this.root.Level.ToString());
-            writer.WriteStartElement("Attributes");
-            foreach(Attribute a in this.root.Attributes)
-            {
-                writer.WriteStartElement("Attribute");
-                writer.WriteElementString("Type", a.type.ToString());
-                writer.WriteElementString("Name", a.Name);
-                if (a.type == Attribute.AttributeType.STRING)
-                    writer.WriteElementString("Value", a.value_string);
-                else
-                {
-                    writer.WriteElementString("Value", a.type == Attribute.AttributeType.INT ? a.value_int.ToString() : a.value_double.ToString());
-                    writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
-                    writer.WriteElementString("Upperbound", a.upperbound.ToString());
-                }
-                writer.WriteEndElement(); //Attribute
-            }
-            writer.WriteEndElement(); //Attributes
-
-            writer.WriteStartElement("OutgoinEdges");
-            foreach (Edge e in this.root.OutgoingEdges)
-            {
-                writer.WriteStartElement("Edge");
-                writer.WriteElementString("Name", e.Name.ToString());
-                writer.WriteEndElement(); //Edge
-            }
-            writer.WriteEndElement(); //OutgoingEdges
+            this.vertexToXML(writer, this.root);
+            this.edgesToXML(writer, this.root);
             writer.WriteEndElement(); //Vertex
 
             foreach (Edge e in this.root.OutgoingEdges)
@@ -213,30 +200,20 @@ namespace ProjectONE
                 writer.WriteStartElement("VertexesAttributes");
                 foreach (Attribute a in this.VertexAttributes)
                 {
-                    writer.WriteStartElement("VertexAttribute");
+                    writer.WriteStartElement("Attribute");
                     writer.WriteElementString("Type", a.type.ToString());
                     writer.WriteElementString("Name", a.Name);
-                    if (a.type != Attribute.AttributeType.STRING)
-                    {
-                        writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
-                        writer.WriteElementString("Upperbound", a.upperbound.ToString());
-                    }
-                    writer.WriteEndElement(); //VertexAttribute
+                    writer.WriteEndElement(); //Attribute
                 }
                 writer.WriteEndElement(); //VertexesAttributes
 
                 writer.WriteStartElement("EdgesAttributes");
                 foreach(Attribute a in this.EdgeAttributes)
                 {
-                    writer.WriteStartElement("EdgeAttribute");
+                    writer.WriteStartElement("Attribute");
                     writer.WriteElementString("Type", a.type.ToString());
                     writer.WriteElementString("Name", a.Name);
-                    if(a.type != Attribute.AttributeType.STRING)
-                    {
-                        writer.WriteElementString("Lowerbound", a.lowerbound.ToString());
-                        writer.WriteElementString("Upperbound", a.upperbound.ToString());
-                    }
-                    writer.WriteEndElement(); //EdgeAttribute
+                    writer.WriteEndElement(); //Attribute
                 }
                 writer.WriteEndElement(); //EdgesAttributes
 
@@ -245,9 +222,6 @@ namespace ProjectONE
                 writer.WriteStartElement("Vertexes");
                 this.preorderXML_vertexes(writer);
                 writer.WriteEndElement(); //Vertex
-                writer.WriteStartElement("Edges");
-                this.preorderXML_edges(writer);
-                writer.WriteEndElement(); //Edges
 
                 writer.WriteEndElement(); //Tree
                 writer.WriteEndDocument();
@@ -344,13 +318,13 @@ namespace ProjectONE
                 //Console.WriteLine("curVertex:" + curVertex);
                 for (int s = 0; s < SplitSize; s++)
                 {
-                    Vertex childVertex = new Vertex((int) new MyRandom().Next(0, double.MaxValue) +  n++, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray(), new LinkedList<Edge>(), l);
+                    Vertex childVertex = new Vertex(n++, GetRandomAttributes(true, VertexAttributes, EdgeAttributes).ToArray(), new LinkedList<Edge>(), l);
                     if (l != Depth - 1)
                     {
                         stack.Enqueue(childVertex);
                         //Console.WriteLine("childVx: " + childVertex.ToString());
                     }
-                    curVertex.append(new Edge((int) new MyRandom().Next(0, double.MaxValue) + n, curVertex, childVertex, GetRandomAttributes(false, VertexAttributes, EdgeAttributes)));
+                    curVertex.append(new Edge(n, curVertex, childVertex, GetRandomAttributes(false, VertexAttributes, EdgeAttributes)));
                 }
             }
             return tree;

@@ -77,9 +77,11 @@ namespace ProjectONE
             tree.root = n1;
             */
 
-            /*richTextBox1.Text = tree.ToString();
+            /*
+            richTextBox1.Text = tree.ToString();
             tree.ToFile();
-            tree.ToDatabase();*/
+            tree.ToDatabase();
+            */
         }
     }
 }

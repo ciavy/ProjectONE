@@ -9,24 +9,23 @@ namespace ProjectONE
 {
     /*
      * Represents an attribute (for example PTime = 8). It is attached to a Vertex or to an edge.
-     * An attribute can be a string, an int or a double. Int and double have a range.
-     * The custumer requests that they must be auto-generated. Double attributes will be the most used ones.
+     * An attribute can be a string, an int or a double. Int has a range.
+     * The custumer requests that they must be auto-generated.
      */
     public class Attribute
     {
-        public enum AttributeType { STRING, DOUBLE, INT };
+        public enum AttributeType { STRING, INT };
         public String Name { get; set; }
         public AttributeType type { get; }
-        public double upperbound { get; set; } //only set if type is double or int
-        public double lowerbound { get; set; } //only set if type is double or int
+        public int upperbound { get; set; } //only set if type is int
+        public int lowerbound { get; set; } //only set if type is int
         public int value_int { get; set; } //value of the attribute. only needed if type is int
-        public double value_double { get; set; } //value of the attribute. only needed if type is double
         public string value_string { get; set; } //value of the attribute. only needed if type is string
 
         /**
          * Note: if t = STRING => lb and ub are excluded automatically
          */
-        public Attribute(String name, AttributeType t, double lb, double ub)
+        public Attribute(String name, AttributeType t, int lb, int ub)
         {
             this.Name = name;
             this.type = t;
@@ -44,9 +43,6 @@ namespace ProjectONE
             this.type = t;
             switch (t)
             {
-                case AttributeType.DOUBLE:
-                    this.value_double = double.Parse(value);
-                    break;
                 case AttributeType.INT:
                     this.value_int = int.Parse(value);
                     break;
@@ -61,9 +57,6 @@ namespace ProjectONE
             string ris = Name + ": ";
             switch (type)
             {
-                case AttributeType.DOUBLE:
-                    ris += value_double + "\t[" + lowerbound + ";" + upperbound + "]";
-                    break;
                 case AttributeType.INT:
                     ris += value_int + "\t[" + (int)lowerbound + ";" + (int)upperbound + "]";
                     break;
@@ -99,9 +92,6 @@ namespace ProjectONE
                     break;
                 case AttributeType.INT:
                     value_int = (int)r.Next(this.lowerbound, this.upperbound);
-                    break;
-                case AttributeType.DOUBLE:
-                    value_double = r.Next(this.lowerbound, this.upperbound);
                     break;
             }
             return this;

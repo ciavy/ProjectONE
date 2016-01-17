@@ -19,7 +19,6 @@ namespace ProjectONE.GUI
         {
             InitializeComponent();
             comboBox1.Items.Add("String");
-            comboBox1.Items.Add("Double");
             comboBox1.Items.Add("Integer");
             comboBox1.SelectedIndex = 0;
             type = t;
@@ -39,28 +38,24 @@ namespace ProjectONE.GUI
         //insert attribute
         private void button1_Click(object sender, EventArgs e)
         {
+            bool problem = false;
             if (!comboBox1.SelectedItem.ToString().Equals("String"))
             {
-                double temp1, temp2;
+                int temp1, temp2;
 
-                if (textBox2.Text.Contains("."))
-                    textBox2.Text = textBox2.Text.Replace(".", ",");
-                if (textBox3.Text.Contains("."))
-                    textBox3.Text = textBox3.Text.Replace(".", ",");
-
-                if (double.TryParse(textBox2.Text, out temp1) && double.TryParse(textBox3.Text, out temp2)) //both the values of the range are inserted?
+                if (int.TryParse(textBox2.Text, out temp1) && int.TryParse(textBox3.Text, out temp2)) //both the values of the range are inserted?
                 {
                     if (temp1 <= temp2) //range: n1 <= n2?
                     {
-                        if (this.comboBox1.SelectedItem.ToString().Equals("Integer"))
-                        { //attribute of type int
-                            this.CreateTreeForm.passParams(this.type, textBox1.Text, comboBox1.SelectedItem.ToString(), ((int)temp1).ToString(), ((int)temp2).ToString());
-                        }
-                        else { //attribute of type double
-                            this.CreateTreeForm.passParams(this.type, textBox1.Text, comboBox1.SelectedItem.ToString(), temp1.ToString(), temp2.ToString());
-                        }
+                        this.CreateTreeForm.passParams(this.type, textBox1.Text, comboBox1.SelectedItem.ToString(), ((int)temp1).ToString(), ((int)temp2).ToString());
                     }
+                    else
+                        problem = true;
                 }
+                else
+                    problem = true;
+                if(problem)
+                    MessageBox.Show("Please insert appropriate attributes");
                 return;
             }
             //attribute is of type string

@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\CalculusManagerControl.cs" />
     <Compile Include="GUI\CreateTreeControl.cs" />
     <Compile Include="Utility\Attribute.cs" />
     <Compile Include="GUI\CalculusManagerForm.cs">

@@ -15,6 +15,7 @@ namespace ProjectONE.GUI
         public UploadTreeForm()
         {
             InitializeComponent();
+            this.Location = new Point((Screen.FromControl(this).Bounds.Width - this.Width) / 2, (Screen.FromControl(this).Bounds.Height - this.Height) / 2);
         }
 
         //Button to choose the directory of the tree to be upload to DB

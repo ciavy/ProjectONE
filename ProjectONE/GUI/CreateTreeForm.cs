@@ -19,6 +19,7 @@ namespace ProjectONE.GUI
         public CreateTreeForm()
         {
             InitializeComponent();
+            this.Location = new Point((Screen.FromControl(this).Bounds.Width - this.Width) / 2, (Screen.FromControl(this).Bounds.Height - this.Height) / 2);
             this.verattr = new LinkedList<Attribute>();
             this.edgeattr = new LinkedList<Attribute>();
         }
@@ -76,10 +77,7 @@ namespace ProjectONE.GUI
                 switch (cbsel)
                 {
                     case "String":
-                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.STRING, 0.0, 0.0));
-                        break;
-                    case "Double":
-                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.DOUBLE, double.Parse(range0), double.Parse(range1)));
+                        this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.STRING, 0, 0));
                         break;
                     case "Integer":
                         this.AppendVertexAttribute(new Attribute(nomeattr, Attribute.AttributeType.INT, int.Parse(range0), int.Parse(range1)));
@@ -102,10 +100,7 @@ namespace ProjectONE.GUI
                 switch (cbsel)
                 {
                     case "String":
-                        this.AppendEdgeAttribute(new Attribute(nomeattr, Attribute.AttributeType.STRING, 0.0, 0.0));
-                        break;
-                    case "Double":
-                        this.AppendEdgeAttribute(new Attribute(nomeattr, Attribute.AttributeType.DOUBLE, Double.Parse(range0), double.Parse(range1)));
+                        this.AppendEdgeAttribute(new Attribute(nomeattr, Attribute.AttributeType.STRING, 0, 0));
                         break;
                     case "Integer":
                         this.AppendEdgeAttribute(new Attribute(nomeattr, Attribute.AttributeType.INT, int.Parse(range0), int.Parse(range1)));

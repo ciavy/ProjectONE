@@ -15,6 +15,7 @@ namespace ProjectONE.GUI
         public MainPage()
         {
             InitializeComponent();
+            this.Location = new Point((Screen.FromControl(this).Bounds.Width - this.Width) / 2, (Screen.FromControl(this).Bounds.Height - this.Height) / 2);
         }
 
         //Button to open CreateTreeForm
